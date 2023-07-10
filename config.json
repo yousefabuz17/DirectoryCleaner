@@ -1,14 +1,14 @@
 {
     "directories": [
         {
-            "src_dir": "./",
-            "dest_dir": "./",
-            "move_before_date": "YYYY-mm-dd"
+            "src_dir": "/Users/yousefabuzahrieh/Downloads",
+            "dest_dir": "/Users/yousefabuzahrieh/Downloads/",
+            "move_before_date": "2023-07-01"
         },
         {
-            "src_dir": "./",
-            "dest_dir": "./",
-            "move_before_date": "YYYY-mm-dd"
+            "src_dir": "/Users/yousefabuzahrieh/Desktop",
+            "dest_dir": "/Users/yousefabuzahrieh/Desktop",
+            "move_before_date": "2023-07-01"
         }
     ],
     ".ignore": [
