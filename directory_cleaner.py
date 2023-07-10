@@ -12,7 +12,7 @@ class DirectoryCleaner:
         self.ignored_files = ignored_files
         self.make_dir()
 
-    make_dir = lambda self: os.makedirs(self.dest_path / self.time, exist_ok=True)
+    make_dir = lambda self, name=None: os.makedirs(self.dest_path / self.time, exist_ok=True) if not name else os.makedirs(self.dest_path / self.time, exist_ok=True)
     move_files = lambda self, file: shutil.move(self.src_path / file, self.dest_path / self.time / file)
     is_ignored = lambda self, file: any(entry in file for entry in self.ignored_files)
     clean = lambda self: [self.move_files(file) for file in os.listdir(self.src_path) if dt.fromtimestamp(os.path.getmtime(self.src_path / file)) <= self.move_date and not self.is_ignored(file) and not os.path.splitext(file)[1]=='']
