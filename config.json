@@ -1,0 +1,5 @@
+{
+    "src_dir": "./",
+    "dest_dir": "./",
+    "move_before_date": "YYYY-MM-DD"
+}
