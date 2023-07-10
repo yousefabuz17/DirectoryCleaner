@@ -1,19 +1,60 @@
-# DirectoryCleaner Project
+# Directory Cleaner
 
-## Introduction
-The DirectoryCleaner project is designed to clean up and organize specific directories on your computer, with a focus on the Desktop and Downloads folders. It automatically identifies files based on their creation or modification date and moves them into a new folder, which is named after the date it was created. This project aims to provide a more organized and clutter-free environment by effectively managing files in designated directories.
+The Directory Cleaner is a Python script that enables efficient organization and cleanup of directories by moving outdated files to a designated destination directory based on a specified date.
 
 ## Features
-- Automatic cleaning of the Desktop and Downloads folders
-- Identification of files based on creation/modification date
-- Creation of new folders named after the date the files are moved
-- Moving files into the corresponding date-named folders
 
-## Usage
-Upon running the 'directory_cleaner.py' script, the program will first scan the desired folder for files/sub-directories. It will evaluate the creation or modification dates of the files and create a new folder for each unique date encountered. The files will then be moved into the respective date-named folders.
+- **Automated Directory Cleanup:** The script automatically identifies files in the source directory that are older than the specified date and moves them to the destination directory.
+- **Flexible Configuration:** Users can define multiple directories to clean up, each with its own source and destination paths and a move before date.
+- **File Exclusion:** The script allows you to define a list of ignored files, such as system files or specific file types, which will be excluded from the cleanup process.
+- **Timestamped Backup:** A new directory is created in the destination directory with a timestamp representing the time the program was run. The outdated files are moved to this timestamped backup directory, preserving their original directory structure.
+- **Daemon Mode:** The script can be set up as a daemon, running automatically at specified intervals.
 
-# Future Enhancements
-- ~~Allow customization of multiple target directories for cleaning~~
-- ~~Implement file type filtering to selectively clean specific file types~~
-- ~~Add support for scheduling automatic cleanups~~
-- **Provide a user-friendly graphical interface for configuration and execution**
+## Getting Started
+
+1. Ensure you have Python installed on your system.
+2. Clone this repository to your local machine or download the source code.
+3. Customize the configuration by editing the `config.json` file. Specify the directories to clean up, the destination directory, the move before date, and any ignored files.
+4. (Optional) Configure the script to run as a daemon:
+    - **Unix-based Systems (including macOS):** Follow the steps below to create a launchd service.
+        - Create a new plist file `com.example.directory_cleaner.plist` in the `/Library/LaunchDaemons` directory.
+        - Edit the plist file and provide the correct paths to the Python executable and the `directory_cleaner.py` script.
+        - Set the appropriate permissions for the plist file: `sudo chown root:wheel /Library/LaunchDaemons/com.example.directory_cleaner.plist` and `sudo chmod 644 /Library/LaunchDaemons/com.example.directory_cleaner.plist`.
+        - Load the plist file to start the daemon: `sudo launchctl load /Library/LaunchDaemons/com.example.directory_cleaner.plist`.
+    - **Windows Systems:** Follow the steps below to create a Windows service.
+        - Use a third-party tool like `pywin32` to create a Windows service that runs the `directory_cleaner.py` script.
+5. Run the script manually or start the daemon service to automatically clean up directories based on the configured settings.
+
+
+## Configuration
+
+The `config.json` file contains the following settings:
+
+- `directories`: An array of directory objects, each specifying the source directory, destination directory, and move before date.
+- `.ignore`: A list of ignored files or file types that should not be moved. Customize this list by adding filenames or extensions.
+
+## Examples
+
+```json
+{
+  "directories": [
+    {
+      "src_dir": "/path/to/source/directory",
+      "dest_dir": "/path/to/destination/directory",
+      "move_before_date": "YYYY-MM-DD"
+    },
+    {
+      "src_dir": "/path/to/another/source/directory",
+      "dest_dir": "/path/to/another/destination/directory",
+      "move_before_date": "YYYY-MM-DD"
+    }
+  ],
+  ".ignore": [
+    ".DS_Store",
+    ".localized",
+    "Thumbs.db",
+    ".hdd",
+    ".tmp.drivedownload",
+    ".tmp.driveupload"
+  ]
+}
