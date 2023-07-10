@@ -27,11 +27,9 @@ def main():
         DirectoryCleaner(directory['src_dir'], directory['dest_dir'], directory['move_before_date'], ignored_files).clean()
 
 if __name__ == '__main__':
-    if dt.now().day == 1:
-        try:
-            main()
-        except FileNotFoundError as e:
-            print(f'FileNotFoundError: Change move_date on config.json to a date before {dt.fromtimestamp(os.path.getmtime(Path(__file__).parent.absolute() / "config.json"))}')
-        except ValueError as e:
-            print(f'ValueError: {str(e)}')
-    else:exit()
+    try:
+        main()
+    except FileNotFoundError as e:
+        print(f'FileNotFoundError: Change move_date on config.json to a date before {dt.fromtimestamp(os.path.getmtime(Path(__file__).parent.absolute() / "config.json"))}')
+    except ValueError as e:
+        print(f'ValueError: {str(e)}')
