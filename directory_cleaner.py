@@ -5,14 +5,15 @@ from datetime import datetime as dt
 from pathlib import Path
 
 class DirectoryCleaner:
-    def __init__(self, src_path, dest_path, move_date, ignored_files):
+    def __init__(self, src_path, dest_path, move_date, ignored_files, dir_name=None):
         self.src_path = Path(src_path)
         self.dest_path = Path(dest_path)
         self.move_date = dt.strptime(move_date, '%Y-%m-%d')
         self.ignored_files = ignored_files
+        self.dir_name = dir_name
         self.make_dir()
 
-    make_dir = lambda self, name=None: os.makedirs(self.dest_path / self.time, exist_ok=True) if not name else os.makedirs(self.dest_path / self.time, exist_ok=True)
+    make_dir = lambda self, name=None: os.makedirs(self.dest_path / self.time, exist_ok=True) if self.dir_name is None else os.makedirs(self.dest_path / self.dir_name, exist_ok=True)
     move_files = lambda self, file: shutil.move(self.src_path / file, self.dest_path / self.time / file)
     is_ignored = lambda self, file: any(entry in file for entry in self.ignored_files)
     clean = lambda self: [self.move_files(file) for file in os.listdir(self.src_path) if dt.fromtimestamp(os.path.getmtime(self.src_path / file)) <= self.move_date and not self.is_ignored(file) and not os.path.splitext(file)[1]=='']
