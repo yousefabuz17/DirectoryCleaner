@@ -79,8 +79,11 @@ class DirectoryCleanerApp(QMainWindow):
 
     def update_progress(self, progress):
         self.progress_bar.setValue(progress)
-        if progress == 99:
+        if progress == 100:
             self.success_label.setText("Cleaning completed successfully.")
+    
+    def show_success_message(self):
+        QMessageBox.information(self, "Success", "Cleaning completed.")
 
 class DirectoryCleaner:
     def __init__(self, src_path, dest_path, move_date, ignored_files, dir_name=None):
