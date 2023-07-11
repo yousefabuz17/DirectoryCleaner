@@ -67,11 +67,11 @@ The `config.json` file contains the following settings:
     - ~~**Display Progress**: Display the progress of the cleanup process.~~
     - ~~**Display Errors**: Display any errors that occur during the cleanup process.~~
     - ~~**Display Results**: Display the number of files moved and the total size of the files moved.~~
-    - **Daemon Mode**: Allow users to configure the script to run as a daemon.
+    - ~~**Daemon Mode**: Allow users to configure the script to run as a daemon.~~
 
 
 # GUI Application
-![Screen Shot 2023-07-10 at 7 59 45 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/d07f8f42-6460-427c-9aec-0e8c0755ce42)
+![Screen Shot 2023-07-10 at 8 12 18 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/77385c14-8926-4049-a3fe-fa0ff87119b2)
 
 
 
