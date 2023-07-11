@@ -2,9 +2,10 @@ import sys
 import os
 import json
 import shutil
+import daemon
 from datetime import datetime as dt
 from pathlib import Path
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QFileDialog, QCheckBox
 
 class DirectoryCleanerApp(QMainWindow):
     def __init__(self):
@@ -23,6 +24,9 @@ class DirectoryCleanerApp(QMainWindow):
 
         self.date_label = QLabel("Move Before Date (YYYY-MM-DD):")
         self.date_line_edit = QLineEdit()
+        
+        self.daemon_checkbox = QCheckBox("Automatic Daemon")
+        self.daemon_checkbox.setChecked(False)
 
         self.run_button = QPushButton("Run Directory Cleaner")
         self.run_button.clicked.connect(self.run_directory_cleaner)
@@ -36,6 +40,7 @@ class DirectoryCleanerApp(QMainWindow):
         layout.addWidget(self.dest_browse_button)
         layout.addWidget(self.date_label)
         layout.addWidget(self.date_line_edit)
+        layout.addWidget(self.daemon_checkbox)
         layout.addWidget(self.run_button)
 
         central_widget = QWidget()
@@ -55,8 +60,16 @@ class DirectoryCleanerApp(QMainWindow):
         dest_path = self.dest_line_edit.text()
         move_date = self.date_line_edit.text()
         ignore_files = json.load(open(Path(__file__).parent.absolute() / 'config.json'))['.ignore']
-        cleaner = DirectoryCleaner(src_path, dest_path, move_date, ignore_files)
-        cleaner.clean()
+        run_as_daemon = self.daemon_checkbox.isChecked()
+
+        if run_as_daemon:
+            with daemon.DaemonContext():
+                cleaner = DirectoryCleaner(src_path, dest_path, move_date, ignore_files)
+                cleaner.clean()
+        else:
+            cleaner = DirectoryCleaner(src_path, dest_path, move_date, ignore_files)
+            cleaner.clean()
+
 
 class DirectoryCleaner:
     def __init__(self, src_path, dest_path, move_date, ignored_files, dir_name=None):
