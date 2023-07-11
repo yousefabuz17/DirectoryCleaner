@@ -72,14 +72,13 @@ The `config.json` file contains the following settings:
 
 
 # GUI Application
-**First Screen**
-
+### **First Screen**
 ![Screen Shot 2023-07-10 at 8 26 11 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/4cb8b3f0-a781-4e84-a17a-b612575769d5)
 ---
-**Second Screen**
+### **Second Screen**
 ![Screen Shot 2023-07-10 at 8 26 31 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/14dac592-b3bc-474e-9eb2-2e9721cdbbd4)
 ---
-**Third Screen**
+### **Final Screen**
 ![Screen Shot 2023-07-10 at 8 28 48 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/cbc572ec-69ed-4298-ac4b-c657172dc070)
 
 
