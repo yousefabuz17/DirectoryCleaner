@@ -5,13 +5,17 @@ import shutil
 import daemon
 from datetime import datetime as dt
 from pathlib import Path
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QFileDialog, QCheckBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QFileDialog, QCheckBox, QMessageBox, QProgressBar
+from PyQt5.QtCore import Qt, pyqtSignal, QObject
 
 class DirectoryCleanerApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Directory Cleaner")
-        
+
+        # GUI components
+        self.success_label = QLabel('Progress Bar')
+        self.progress_bar = QProgressBar()
         self.src_label = QLabel("Source Directory:")
         self.src_line_edit = QLineEdit()
         self.src_browse_button = QPushButton("Browse...")
@@ -24,14 +28,17 @@ class DirectoryCleanerApp(QMainWindow):
 
         self.date_label = QLabel("Move Before Date (YYYY-MM-DD):")
         self.date_line_edit = QLineEdit()
-        
+
         self.daemon_checkbox = QCheckBox("Automatic Daemon")
         self.daemon_checkbox.setChecked(False)
 
         self.run_button = QPushButton("Run Directory Cleaner")
         self.run_button.clicked.connect(self.run_directory_cleaner)
 
+        # Layout
         layout = QVBoxLayout()
+        layout.addWidget(self.success_label)
+        layout.addWidget(self.progress_bar)
         layout.addWidget(self.src_label)
         layout.addWidget(self.src_line_edit)
         layout.addWidget(self.src_browse_button)
@@ -65,11 +72,15 @@ class DirectoryCleanerApp(QMainWindow):
         if run_as_daemon:
             with daemon.DaemonContext():
                 cleaner = DirectoryCleaner(src_path, dest_path, move_date, ignore_files)
-                cleaner.clean()
+                cleaner.clean(self.update_progress)
         else:
             cleaner = DirectoryCleaner(src_path, dest_path, move_date, ignore_files)
-            cleaner.clean()
+            cleaner.clean(self.update_progress)
 
+    def update_progress(self, progress):
+        self.progress_bar.setValue(progress)
+        if progress == 99:
+            self.success_label.setText("Cleaning completed successfully.")
 
 class DirectoryCleaner:
     def __init__(self, src_path, dest_path, move_date, ignored_files, dir_name=None):
@@ -83,7 +94,20 @@ class DirectoryCleaner:
     make_dir = lambda self, name=None: os.makedirs(self.dest_path / self.time, exist_ok=True) if self.dir_name is None else os.makedirs(self.dest_path / self.dir_name, exist_ok=True)
     move_files = lambda self, file: shutil.move(self.src_path / file, self.dest_path / self.time / file)
     is_ignored = lambda self, file: any(entry in file for entry in self.ignored_files)
-    clean = lambda self: [self.move_files(file) for file in os.listdir(self.src_path) if dt.fromtimestamp(os.path.getmtime(self.src_path / file)) <= self.move_date and not self.is_ignored(file) and not os.path.splitext(file)[1]=='']
+    clean = lambda self, progress_callback: self._clean(progress_callback)
+
+    def _clean(self, progress_callback):
+        files = os.listdir(self.src_path)
+        num_files = len(files)
+        progress_step = 100 / num_files
+        progress = 0
+
+        for file in files:
+            if dt.fromtimestamp(os.path.getmtime(self.src_path / file)) <= self.move_date and not self.is_ignored(file) and not os.path.splitext(file)[1] == '':
+                self.move_files(file)
+
+            progress += progress_step
+            progress_callback(int(progress))
 
     time = dt.now().strftime('%I-%M-%S%p %m:%d:%Y')
 
