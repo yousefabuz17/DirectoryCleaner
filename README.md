@@ -63,15 +63,15 @@ The `config.json` file contains the following settings:
 # Future Enhancements
 
 1. **User Interface**: Turn project into a GUI application.
-    - **Allow User Input**: Allow users to specify the source and destination directories, move before date, and ignored files.
-    - **Display Progress**: Display the progress of the cleanup process.
-    - **Display Errors**: Display any errors that occur during the cleanup process.
-    - **Display Results**: Display the number of files moved and the total size of the files moved.
+    - ~~**Allow User Input**: Allow users to specify the source and destination directories, move before date, and ignored files.~~
+    - ~~**Display Progress**: Display the progress of the cleanup process.~~
+    - ~~**Display Errors**: Display any errors that occur during the cleanup process.~~
+    - ~~**Display Results**: Display the number of files moved and the total size of the files moved.~~
     - **Daemon Mode**: Allow users to configure the script to run as a daemon.
-2. ...
 
 
-
+# GUI Application
+![Screen Shot 2023-07-10 at 7 59 45 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/d07f8f42-6460-427c-9aec-0e8c0755ce42)
 
 
 
