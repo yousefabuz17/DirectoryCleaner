@@ -68,10 +68,19 @@ The `config.json` file contains the following settings:
     - ~~**Display Errors**: Display any errors that occur during the cleanup process.~~
     - ~~**Display Results**: Display the number of files moved and the total size of the files moved.~~
     - ~~**Daemon Mode**: Allow users to configure the script to run as a daemon.~~
+2. **Automated Testing**: Add automated tests to ensure the script is working as expected.
 
 
 # GUI Application
-![Screen Shot 2023-07-10 at 8 12 18 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/77385c14-8926-4049-a3fe-fa0ff87119b2)
+**First Screen**
+
+![Screen Shot 2023-07-10 at 8 26 11 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/4cb8b3f0-a781-4e84-a17a-b612575769d5)
+---
+**Second Screen**
+![Screen Shot 2023-07-10 at 8 26 31 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/14dac592-b3bc-474e-9eb2-2e9721cdbbd4)
+---
+**Third Screen**
+![Screen Shot 2023-07-10 at 8 28 48 PM](https://github.com/yousefabuz17/DirectoryCleaner/assets/68834704/cbc572ec-69ed-4298-ac4b-c657172dc070)
 
 
 
